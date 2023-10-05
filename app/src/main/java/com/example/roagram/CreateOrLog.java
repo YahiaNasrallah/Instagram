@@ -3,6 +3,7 @@ package com.example.roagram;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,12 +16,16 @@ public class CreateOrLog extends AppCompatActivity {
 
 
     ActivityCreateOrLogBinding binding;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityCreateOrLogBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Database mydatabase=new Database(this);
+        preferences=getSharedPreferences("MyPrefe",MODE_PRIVATE);
+        editor=preferences.edit();
 
         binding.materialButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,51 +34,66 @@ public class CreateOrLog extends AppCompatActivity {
             }
         });
 
+        if (preferences.contains("savedName")){
+            Intent intent=new Intent(CreateOrLog.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+
+            binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if (binding.edEmail.getText().toString().equals("")||binding.edPassword.getText().toString().equals("")){
-                    if (binding.edEmail.getText().toString().equals("")){
-                        binding.edEmail.setError("Enter Data");
-                        binding.edEmail.requestFocus();
-                    }else {
-                        binding.edPassword.setError("Enter Data");
-                        binding.edPassword.requestFocus();
-                    }
-
-                }else {
-
-                    if (mydatabase.CheckUser(binding.edEmail.getText().toString(),binding.edPassword.getText().toString())){
-                        if (mydatabase.getTemp().equals("")){
-                            mydatabase.AddTemp(binding.edEmail.getText().toString());
-                        }else{
-                            mydatabase.UpdateTemp(binding.edEmail.getText().toString());
+                    if (binding.edEmail.getText().toString().equals("")||binding.edPassword.getText().toString().equals("")){
+                        if (binding.edEmail.getText().toString().equals("")){
+                            binding.edEmail.setError("Enter Data");
+                            binding.edEmail.requestFocus();
+                        }else {
+                            binding.edPassword.setError("Enter Data");
+                            binding.edPassword.requestFocus();
                         }
-                        Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        finish();
-
-
-
 
                     }else {
 
-                        binding.edEmail.setError("Error in email");
-                        binding.edEmail.requestFocus();
-                        binding.edPassword.setError("Error in password");
-                        binding.edPassword.requestFocus();
+                        if (mydatabase.CheckUser(binding.edEmail.getText().toString(),binding.edPassword.getText().toString())){
+                            if (mydatabase.getTemp().equals("")){
+                                mydatabase.AddTemp(binding.edEmail.getText().toString());
+                            }else{
+                                mydatabase.UpdateTemp(binding.edEmail.getText().toString());
+                            }
+
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            editor.putString("savedName", binding.edEmail.getText().toString());
+                            editor.putString("savedPAssword", binding.edPassword.getText().toString());
+                            editor.commit();
+                            startActivity(intent);
+
+
+
+
+
+
+                        }else {
+
+                            binding.edEmail.setError("Error in email");
+                            binding.edEmail.requestFocus();
+                            binding.edPassword.setError("Error in password");
+                            binding.edPassword.requestFocus();
+                        }
+
+
                     }
+
 
 
                 }
+            });
 
+        }
 
-
-            }
-        });
 
 
 

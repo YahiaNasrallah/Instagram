@@ -1,6 +1,8 @@
 package com.example.roagram;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,13 +21,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     BottomSheetDialog bottomSheetDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding=FragmentProfileBinding.inflate(inflater, container, false);
-
+        preferences= getContext().getSharedPreferences("MyPrefe", Context.MODE_PRIVATE);
+        editor=preferences.edit();
         Database mydatabase=new Database(getContext());
 
         bottomSheetDialog=new BottomSheetDialog(getContext());
@@ -104,14 +109,17 @@ public class ProfileFragment extends Fragment {
         layout_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Email", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),ChangeEmail.class));
                 bottomSheetDialog.hide();
             }
         });
         layout_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "LogOut", Toast.LENGTH_SHORT).show();
+                editor.clear();
+                editor.commit();
+                Intent intent=new Intent(getContext(),CreateOrLog.class);
+                startActivity(intent);
                 bottomSheetDialog.hide();
             }
         });

@@ -13,9 +13,12 @@
         android:theme="@style/Theme.Roagram"
         tools:targetApi="31">
         <activity
-            android:name=".ChangePasswordActivity"
-            android:theme="@style/Base.Theme.Roagram2"
+            android:name=".ChangeEmail"
             android:exported="false" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.Roagram2" />
         <activity
             android:name=".ShowAccount"
             android:exported="false" />
@@ -39,7 +42,7 @@
             android:name=".CreateOrLog"
             android:exported="true"
             android:label="@string/title_activity_create_or_log"
-            android:theme="@style/Base.Theme.Roagram2"></activity>
+            android:theme="@style/Base.Theme.Roagram2" />
         <activity
             android:name=".Splash"
             android:exported="true">
@@ -52,7 +55,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
     </application>
 
 </manifest>

@@ -164,7 +164,7 @@
           android:completionHint="message"
           android:completionThreshold="1"
           android:hint="Bio"
-          android:inputType="text"
+          android:inputType="textMultiLine"
           android:textColor="@color/black"
           android:textColorHint="@color/gray3"
           app:layout_constraintEnd_toEndOf="parent"

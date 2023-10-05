@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -33,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        preferences= this.getSharedPreferences("MyPrefe", this.MODE_PRIVATE);
+        editor=preferences.edit();
         replaceFragment(new HomeFragment());
 
         binding.bottom.setOnItemSelectedListener(item ->{
