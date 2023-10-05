@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (item.getItemId()==R.id.menu_search){
                 replaceFragment(new SearchFragment());
             }else if (item.getItemId()==R.id.menu_new){
-
+                startActivity(new Intent(getApplicationContext(), UplodeImageForPostActivity.class));
             }else if (item.getItemId()==R.id.menu_reel){
 
             }else if (item.getItemId()==R.id.menu_profile){
